@@ -14,7 +14,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import LoginSignUp from '../pages/LoginSignUp';
 import LuckyDiceGame from '../pages/LuckyDiceGame';
 import Histories from '../pages/Histories';
-import Account from '../pages/Account';
+
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 

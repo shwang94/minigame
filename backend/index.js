@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+
+const dotenv = require('dotenv');
 //Import router
 const { homeRouter } = require("./app/routes/homeRouter");
 const { randomRouter } = require("./app/routes/randomRouter");
@@ -16,6 +18,9 @@ const { prizeHistoryRouter } = require("./app/routes/prizeHistoryRouter");
 
 const mongoose = require('mongoose');// khai báo thư viện database 
 
+dotenv.config({
+  path: './.env'
+});
 
 //Import models
 const userModel = require("./app/models/userModel");
@@ -23,7 +28,7 @@ const diceHistoryModel = require("./app/models/diceHistoryModel");
 
 
 //kết nối database 
-mongoose.connect('mongodb://127.0.0.1:27017/GAMEDICE', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -36,7 +41,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/GAMEDICE', {
 
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT;
+
 app.use(express.json());
 app.use(cors());
 app.use("/", homeRouter);

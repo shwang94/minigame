@@ -11,6 +11,8 @@ import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, U
 import { Container } from '@mui/system';
 import { Icon } from '@iconify/react';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const provider = new GoogleAuthProvider();
 const { Title } = Typography;
 
@@ -52,7 +54,7 @@ function LoginSignUp() {
     const loginGoogle = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                axios.post('http://localhost:8000/users',
+                axios.post(`${apiUrl}/users`,
                     {
                         "username": "user" + Math.floor(Math.random(0) * 9) + Math.floor(Math.random(0) * 9) + Math.floor(Math.random(0) * 9) + Math.floor(Math.random(0) * 9),
                         "loginType": "Google",
@@ -97,7 +99,7 @@ function LoginSignUp() {
             password: values.password
         }
 
-        axios.get('http://localhost:8000/users',
+        axios.get(`${apiUrl}/users`,
 
             {
                 headers: {
@@ -146,7 +148,7 @@ function LoginSignUp() {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/users',
+                `${apiUrl}/users`,
                 {
                     username: values.username,
                     loginType: 'SignUp',

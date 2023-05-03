@@ -10,7 +10,7 @@ TableRow, IconButton} from '@mui/material';
 import PropTypes from 'prop-types';
 import {imagesPrize} from '../data';
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -96,7 +96,7 @@ function createData(code, discount) {
 async function voucherList(voucherList) {
     const results = await Promise.all(voucherList.map(async (code) => {
         try {
-            const response = await axios.get(`http://localhost:8000/discount/${code}`);
+            const response = await axios.get(`${apiUrl}/discount/${code}`);
             return createData(code, response.data + "%");
         } catch (error) {
             console.error(error);
@@ -131,7 +131,7 @@ export default function Histories() {
     
     useEffect(() => {
         
-        axios.get('http://localhost:8000/gamedice/dice-history/' + user.username,
+        axios.get(`${apiUrl}/gamedice/dice-history/${user.username}`,
 
             {
                 headers: {
@@ -140,8 +140,6 @@ export default function Histories() {
             }
         )
             .then(function (response) {
-
-                // setCount(response.data.dices.length);
 
                 setTimeout(() => {
                     setDataUser(response.data.dices)
@@ -158,7 +156,7 @@ export default function Histories() {
                 }
             });
 
-        axios.get('http://localhost:8000/gamedice/prize-history/' + user.username,
+        axios.get(`${apiUrl}/gamedice/prize-history/${user.username}`,
 
             {
                 headers: {
@@ -172,11 +170,11 @@ export default function Histories() {
 
             })
             .catch(function (error) {
-                // console.log(error);
+                console.log(error);
 
             });
 
-        axios.get('http://localhost:8000/gamedice/voucher-history/' + user.username,
+        axios.get(`${apiUrl}/gamedice/voucher-history/${user.username}`,
 
             {
                 headers: {

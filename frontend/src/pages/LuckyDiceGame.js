@@ -11,6 +11,8 @@ import { Box, Button, Paper, Grid, Typography, Container } from '@mui/material';
 import { Icon } from '@iconify/react';
 import {imagesDiceResult, imagesPrize} from '../data';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -43,7 +45,7 @@ export default function LuckyDiceGame() {
     useEffect(() => {
         // Gọi API
 
-        axios.get('http://localhost:8000/gamedice/dice-history/' + user.username,
+        axios.get(`${apiUrl}/gamedice/dice-history/${user.username}`,
 
             {
                 headers: {
@@ -70,7 +72,7 @@ export default function LuckyDiceGame() {
                 }
             });
 
-            axios.get(`http://localhost:8000/gamedice/dice/${user.username}`,
+            axios.get(`${apiUrl}/gamedice/dice/${user.username}`,
 
             {
                 headers: {
@@ -113,7 +115,7 @@ export default function LuckyDiceGame() {
             // "dice": randNumber
         };
 
-        await axios.post('http://localhost:8000/gamedice/dice', body, header)
+        await axios.post(`${apiUrl}/gamedice/dice`, body, header)
             .then(function (response) {
                 setTimeout(() => {
                     const thePrize = response.data.prize
