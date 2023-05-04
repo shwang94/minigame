@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { auth, storage } from '../firebase';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import axios from 'axios';
 
 import { setUser } from "../actions/users.actions";
 
-import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message, Spin } from 'antd';
+import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message, Alert } from 'antd';
 import { Container } from '@mui/system';
 import { Icon } from '@iconify/react';
 
@@ -29,8 +29,11 @@ function LoginSignUp() {
     const [name, setName] = useState("Mừng bạn đến với GAMEDICE")
     const [messageApi, contextHolder] = message.useMessage();
     const [imageUpLoad, setImageUpLoad] = useState(null)
-    const [signUpButton, setSignUpButton] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    }
     // đăng kí dùng useDispatch
     const dispatch = useDispatch();
 
@@ -64,7 +67,8 @@ function LoginSignUp() {
                     },
                     {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
                         }
                     }
                 )
@@ -103,24 +107,35 @@ function LoginSignUp() {
 
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
                 }
             }
         )
             .then(function (response) {
 
-                const in4User = response.data.find(item => item.username === values.username && item.password === values.password);
-                console.log(in4User)
-                let theUser = JSON.stringify(in4User);
-                localStorage.setItem('dataUser', theUser);
+                const in4User = response.data.find(item => item.username === data.username && item.password === data.password);
+                if (
+                    in4User !== undefined
+                ) {
+                    let theUser = JSON.stringify(in4User);
+                    localStorage.setItem('dataUser', theUser);
 
-                dispatch(setUser(in4User))
-                setName("Chào Mừng " + in4User.username + " đã trở lại với GAMEDICE");
+                    dispatch(setUser(in4User))
+                    setName("Chào Mừng " + in4User.username + " đã trở lại với GAMEDICE");
+                }
+                else setShowAlert(true);
+
 
             })
             .catch(function (error) {
-                console.log(error)
-                alert('Password hoặc username không đúng!')
+                console.log(error);
+                messageApi.open({
+                    type: 'error',
+                    content: 'lỗi không lấy được dữ liệu',
+                });
+
             });
 
 
@@ -129,14 +144,14 @@ function LoginSignUp() {
     const onFinishFailed = (errorInfo) => {
         messageApi.open({
             type: 'error',
-            content: 'lỗi',
+            content: errorInfo,
         });
     };
 
     //Đăng kí người dùng
     const onSignUp = async (values) => {
         // setSignUpButton(true);
-        console.log('Success signup:'+ values);
+        console.log('Success signup:' + values);
         console.log(values.dragger);
         setImageUpLoad(values.dragger[0]?.originFileObj);
 
@@ -151,7 +166,7 @@ function LoginSignUp() {
                 `${apiUrl}/users`,
                 {
                     username: values.username,
-                    loginType: 'SignUp',
+                    loginType: "SignUp",
                     uid:
                         values.username +
                         Math.floor(Math.random(0) * 9) +
@@ -163,6 +178,8 @@ function LoginSignUp() {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
                     },
                 }
             );
@@ -171,7 +188,7 @@ function LoginSignUp() {
             let theUser = JSON.stringify(response.data);
             localStorage.setItem('dataUser', theUser);
             dispatch(setUser(response.data));
-           
+
         } catch (error) {
             console.log(error);
             messageApi.open({
@@ -179,7 +196,6 @@ function LoginSignUp() {
                 content: 'Không thể tạo tài khoản do username này đã tồn tại!',
 
             });
-            // setSignUpButton(false)
         }
     };
 
@@ -194,9 +210,7 @@ function LoginSignUp() {
 
     const logoutAccount = () => {
         dispatch(setUser(null));
-        // setSignUpButton(true)
-        // window.location.reload();
-
+       
     }
 
 
@@ -229,7 +243,7 @@ function LoginSignUp() {
                         <Divider style={{ borderColor: 'blue' }}>SignIn With</Divider>
                         <Row style={{ display: "flex", justifyContent: "center" }}>
                             <Icon icon="vaadin:google-plus-square" color="red" width="50" height="50" onClick={loginGoogle} />
-                           
+
                         </Row>
 
 
@@ -245,6 +259,7 @@ function LoginSignUp() {
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off"
                             >
+
                                 <Form.Item
                                     label="User Name"
                                     name="username"
@@ -277,6 +292,18 @@ function LoginSignUp() {
                                         Log In
                                     </Button>
                                 </Form.Item>
+                                {showAlert && (
+
+                                    <Alert
+                                        message="Error"
+                                        description="Mật khẩu hoặc username không đúng!"
+                                        type="error"
+                                        showIcon
+                                        closable
+                                        onClose={handleCloseAlert}
+                                    />
+                                )}
+
                             </Form></Col>
                             <Col span={12}><Form
                                 name="basic"
@@ -326,14 +353,17 @@ function LoginSignUp() {
                                 </Form.Item>
 
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }} disabled={signUpButton}>
+                                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }}>
                                         Sign Up
                                     </Button>
                                 </Form.Item>
                             </Form></Col>
                         </Row>
+
                     </>
             }
+
+
         </Container>
     )
 }

@@ -29,6 +29,7 @@ const getDice = async (req, res) => {
     let userObj = null;
     let newDiceHistory = null;
     let newVoucherHistory = null;
+    let newPrizeHistory = null
     let top3DiceHistories = null;
     var resData = { "voucher": null, "discount": 0, "dice": 0, "prize": null };
 
@@ -40,8 +41,6 @@ const getDice = async (req, res) => {
         diceHistory.dice = Math.floor(6 * Math.random()) + 1;
         diceHistory.createdAt = Date.now();
         diceHistory.updatedAt = Date.now();
-        // diceHistory.dice = 4;
-
 
         newDiceHistory = await diceHistory.save();
 

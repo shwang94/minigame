@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import HeaderTab from './components/HeaderTab';
 import TheFooter from './components/TheFooter';
-import { Routes, Route, Link } from 'react-router-dom';
-import LoginSignUp from './pages/LoginSignUp';
-import LuckyDiceGame from './pages/LuckyDiceGame';
+
 
 function App() {
   return (

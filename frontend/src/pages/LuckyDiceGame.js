@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import {
-    setUser
-} from "../actions/users.actions";
+import { useSelector } from "react-redux";
+
 import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
-import { Box, Button, Paper, Grid, Typography, Container } from '@mui/material';
-
+import { Button, Paper, Grid, Typography, Container } from '@mui/material';
+import {message } from 'antd';
 import { Icon } from '@iconify/react';
 import {imagesDiceResult, imagesPrize} from '../data';
 
@@ -28,6 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function LuckyDiceGame() {
 
     const [randomNumber, setRandomNumber] = useState(0);
+    const [messageApi, contextHolder] = message.useMessage();
     const [dataUser, setDataUser] = useState([]);
     const [top1, setTop1] = useState();
     const [top3, setTop3] = useState([]);
@@ -41,7 +40,6 @@ export default function LuckyDiceGame() {
     const { user } = useSelector(
         (reduxData) => reduxData.userReducers
     );
-    const dispatch = useDispatch(); // đăng kí dùng useDispatch
     useEffect(() => {
         // Gọi API
 
@@ -98,7 +96,7 @@ export default function LuckyDiceGame() {
                 }
             });
 
-    }, [count]);
+    }, [count, user.username]);
     const onBtnNem = async (event) => {
         setVoucher(null);
         setPrize(1);
@@ -118,10 +116,10 @@ export default function LuckyDiceGame() {
         await axios.post(`${apiUrl}/gamedice/dice`, body, header)
             .then(function (response) {
                 setTimeout(() => {
-                    const thePrize = response.data.prize
+                    let thePrize = response.data.prize
                     if (response.data.prize !== null) {
                         // const x = imagesPrize.find({name:thePrize});
-                        const thePrize = imagesPrize.findIndex((image) => image.name === response.data.prize);
+                        thePrize = imagesPrize.findIndex((image) => image.name === response.data.prize);
                         setPrize(thePrize)
 
                     }
@@ -137,8 +135,18 @@ export default function LuckyDiceGame() {
 
                 if (error.response.status === 401) {
                     console.log(error);
-
-
+                    messageApi.open({
+                        type: 'error',
+                        content: error,
+                    });
+                    setPlay(false);
+                }
+                if (error.response.status === 500) {
+                    messageApi.open({
+                        type: 'error',
+                        content: 'Lỗi không thể lấy thông tin!',
+                    });
+                    setPlay(false);
                 }
             });
         count = count + 1;
@@ -146,21 +154,18 @@ export default function LuckyDiceGame() {
 
     }
 
-    // useEffect(() => {
-    //    dispatch(setUser)
-    // })
     return (
         <Container>
             <Grid container spacing={3} >
                 <Grid item xs={12} sm={8}>
                     <div>
-                        {user && top3 !={}?
+                        {user && top3 !=={}?
                             <>
                                 <Item style={{ fontSize: "20px" }}>username: <b style={{ color: "violet", }}>{user.username}</b></Item>
                                 <Item>Số lần ném: <b style={{ color: "blue", }}>{dataUser.length}</b></Item>
                                 <Item>Điểm cao nhất đạt được là: <b style={{ color: "blue", }}>{dataUser.length > 0? Math.max(...dataUser): 0}</b></Item>
                                 {top1?<Item>Điểm lần ném gần nhất: <b style={{ color: "blue", }}>{top1}</b></Item>:<Item>Điểm lần ném gần nhất: <b style={{ color: "blue", }}>0</b></Item>}
-                                {top3.length != 0 ? <Item>Điểm 3 ném gần nhất: <b style={{ color: "blue", }}>{top3[0]}, {top3[1]}, {top3[2]}</b></Item>:<Item>Ném từ 3 lần trở lên để tìm phần thưởng.</Item>}
+                                {top3.length !== 0 ? <Item>Điểm 3 ném gần nhất: <b style={{ color: "blue", }}>{top3[0]}, {top3[1]}, {top3[2]}</b></Item>:<Item>Ném từ 3 lần trở lên để tìm phần thưởng.</Item>}
                                 <Item>Tổng điểm: <b style={{ color: "red", fontSize: "20px" }}>{dataUser.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</b></Item>
                             </>
                             :
@@ -176,6 +181,7 @@ export default function LuckyDiceGame() {
                     <div className="row form-group" style={{ display: "flex", justifyContent: "center", marginTop: "20px", marginBottom: "20px" }}>
                         <Button variant="contained" value={user.username} onClick={onBtnNem} disabled={play}>Ném</Button>
                     </div>
+                    {contextHolder}
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     <div style={{ display: "flex", justifyContent: "center", marginTop:"60px"}}>

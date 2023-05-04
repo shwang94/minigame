@@ -54,69 +54,6 @@ const getUserById = (req, res) => {
     }
 }
 
-// post
-const createUser1 = async (req, res) => {
-    let body = req.body; //B1 thu thập
-
-    // //B2 check data
-    // if (!body.username) {
-    //     return res.status(400).json({
-    //         message: "phải nhập username."
-    //     })
-    // }
-    // if (!body.loginType) {
-    //     return res.status(400).json({
-    //         message: "phải nhập loginType."
-    //     })
-    // }
-
-    // if (!body.uid) {
-    //     return res.status(400).json({
-    //         message: "phải nhập uid."
-    //     })
-    // }
-
-    // // if (userModel.findOne({ username: body.username })){   
-    // //     return res.status(400).json({
-    // //         message: "user đã tồn tại"
-    // //     })
-    // //   } 
-    // if (user){   
-    //     return res.status(400).json({
-    //         message: "user đã tồn tại"
-    //     })
-    //   } 
-
-
-    // else {
-    //     //B3 thực hiện thao tác
-    //     let user = {
-
-    //         username: body.username,
-    //         uid: body.uid,
-    //         loginType: body.loginType
-
-    //    }
-
-    try {
-        const user = new userModel(req.body);
-        await user.save();
-        res.status(201).send(user);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-    // try {
-    //     const data = await userModel.create(user);
-    //     return res.status(201).json(data);
-    //   } catch (error) {
-    //     return res.status(500).json({ message: ` user này đã tồn tại.` });
-    //   }
-
-
-}
-
-
-// };
 
 const createUser = async (req, res) => {
     let body = req.body;
@@ -143,11 +80,11 @@ const createUser = async (req, res) => {
             message: "phải nhập password."
         })
     }
-    // if (!body.avatar) {
-    //     return res.status(400).json({
-    //         message: "phải nhập avatar"
-    //     })
-    // }
+    if (!body.avatar) {
+        return res.status(400).json({
+            message: "phải nhập avatar"
+        })
+    }
     var nusername = await userModel.findOne({ username: body.username });
 
     if (nusername !== null) {
@@ -160,7 +97,7 @@ const createUser = async (req, res) => {
 
     if (nuid !== null) {
         return res.status(401).json({
-            message: "user đã tồn tại",
+            message: "uid đã tồn tại",
             data: nuid
         })
     }
