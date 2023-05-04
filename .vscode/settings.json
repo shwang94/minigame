@@ -1,4 +1,8 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/fdc9ce1e-cdd1-46e5-a467-4f153ca44252/resourceGroups/rg-dinhthu/providers/Microsoft.Web/sites/sarah-luckydice-api",
-    "appService.deploySubpath": "backend"
+    "appService.defaultWebAppToDeploy": "/subscriptions/fdc9ce1e-cdd1-46e5-a467-4f153ca44252/resourceGroups/rg-dinhthu/providers/Microsoft.Web/sites/sarah-minigame-api",
+    "appService.deploySubpath": "backend",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
 }
