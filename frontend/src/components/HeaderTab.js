@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Routes, Route } from 'react-router-dom';
-
-import {
-  setUser
-} from "../actions/users.actions";
-
+import { useSelector } from "react-redux";
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -15,7 +9,6 @@ import LoginSignUp from '../pages/LoginSignUp';
 import LuckyDiceGame from '../pages/LuckyDiceGame';
 import Histories from '../pages/Histories';
 
-import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 export default function HeaderTab() {

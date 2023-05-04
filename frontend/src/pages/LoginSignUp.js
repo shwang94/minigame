@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { auth, storage } from '../firebase';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import axios from 'axios';
 
 import { setUser } from "../actions/users.actions";
 
-import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message, Spin } from 'antd';
+import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message } from 'antd';
 import { Container } from '@mui/system';
 import { Icon } from '@iconify/react';
 
@@ -29,7 +29,6 @@ function LoginSignUp() {
     const [name, setName] = useState("Mừng bạn đến với GAMEDICE")
     const [messageApi, contextHolder] = message.useMessage();
     const [imageUpLoad, setImageUpLoad] = useState(null)
-    const [signUpButton, setSignUpButton] = useState(false);
 
     // đăng kí dùng useDispatch
     const dispatch = useDispatch();
@@ -64,7 +63,8 @@ function LoginSignUp() {
                     },
                     {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',                        
                         }
                     }
                 )
@@ -103,7 +103,9 @@ function LoginSignUp() {
 
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
                 }
             }
         )
@@ -151,7 +153,7 @@ function LoginSignUp() {
                 `${apiUrl}/users`,
                 {
                     username: values.username,
-                    loginType: 'SignUp',
+                    loginType: "SignUp",
                     uid:
                         values.username +
                         Math.floor(Math.random(0) * 9) +
@@ -163,6 +165,8 @@ function LoginSignUp() {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin':'*',
+                        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
                     },
                 }
             );
@@ -326,7 +330,7 @@ function LoginSignUp() {
                                 </Form.Item>
 
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }} disabled={signUpButton}>
+                                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }}>
                                         Sign Up
                                     </Button>
                                 </Form.Item>
