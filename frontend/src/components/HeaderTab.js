@@ -10,6 +10,7 @@ import LuckyDiceGame from '../pages/LuckyDiceGame';
 import Histories from '../pages/Histories';
 
 import { Avatar } from 'antd';
+import { designColor } from '../design';
 
 export default function HeaderTab() {
   const [value, setValue] = useState('1');
@@ -24,34 +25,23 @@ export default function HeaderTab() {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'pink' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: '#1F2833' }}>
           {user !== null ? <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
             <Tab label={
               <Avatar icon={<img src={user.avatar} alt='Avatar' />} /> 
             } value="1" > </Tab>
             
              
-            <Tab label="Lucky game" value="2">
-              Lucky Dice Game
-              </Tab>
-            <Tab label="Lịch Sử Chơi" value="3" />
+            <Tab label="Lucky game" value="2" style={designColor.greenlight}/>
+            <Tab label="Lịch Sử Chơi" value="3" style={designColor.greenlight}/>
           </TabList > :
-            <TabList onChange={handleChange} aria-label="lab API tabs example" centered>  <Tab label="Đăng nhập" value="1">Đăng nhập</Tab></TabList>
+            <TabList onChange={handleChange} aria-label="lab API tabs example" centered>  <Tab label="Đăng nhập" value="1" style={designColor.greenlight}>Đăng nhập</Tab></TabList>
           }
         </Box>
         <TabPanel value="1"> <LoginSignUp /> </TabPanel>
         <TabPanel value="2"><LuckyDiceGame /></TabPanel>
         <TabPanel value="3"><Histories/></TabPanel>
       </TabContext>
-
-{/* <Routes> */}
-{/* <Route path='/' element={<LoginSignUp />} />
-  <Route path='/:username' element={<Account />} />
-  <Route path='/game' element={<LuckyDiceGame />} />
-</Routes> */}
-
-
-
     </Box>
   );
 }

@@ -8,7 +8,7 @@ import { Button, Paper, Grid, Typography, Container } from '@mui/material';
 import {message } from 'antd';
 import { Icon } from '@iconify/react';
 import {imagesDiceResult, imagesPrize} from '../data';
-
+import { designColor } from '../design';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -155,31 +155,31 @@ export default function LuckyDiceGame() {
     }
 
     return (
-        <Container>
+        <Container style={{backgroundColor: designColor.black.color}}>
             <Grid container spacing={3} >
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={8} style={{backgroundColor: designColor.black.color}}>
                     <div>
                         {user && top3 !=={}?
                             <>
-                                <Item style={{ fontSize: "20px" }}>username: <b style={{ color: "violet", }}>{user.username}</b></Item>
-                                <Item>Số lần ném: <b style={{ color: "blue", }}>{dataUser.length}</b></Item>
-                                <Item>Điểm cao nhất đạt được là: <b style={{ color: "blue", }}>{dataUser.length > 0? Math.max(...dataUser): 0}</b></Item>
-                                {top1?<Item>Điểm lần ném gần nhất: <b style={{ color: "blue", }}>{top1}</b></Item>:<Item>Điểm lần ném gần nhất: <b style={{ color: "blue", }}>0</b></Item>}
-                                {top3.length !== 0 ? <Item>Điểm 3 ném gần nhất: <b style={{ color: "blue", }}>{top3[0]}, {top3[1]}, {top3[2]}</b></Item>:<Item>Ném từ 3 lần trở lên để tìm phần thưởng.</Item>}
-                                <Item>Tổng điểm: <b style={{ color: "red", fontSize: "20px" }}>{dataUser.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</b></Item>
+                                <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color, fontSize: "20px" }}>username: <b style={{ color: "violet", }}>{user.username}</b></Item>
+                                <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Số lần ném: <b style={{ color: designColor.greenlight.color, }}>{dataUser.length}</b></Item>
+                                <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Điểm cao nhất đạt được là: <b style={{ color: designColor.greenlight.color, }}>{dataUser.length > 0? Math.max(...dataUser): 0}</b></Item>
+                                {top1?<Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Điểm lần ném gần nhất: <b style={{ color: designColor.greenlight.color, }}>{top1}</b></Item>:<Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Điểm lần ném gần nhất: <b style={{ color: designColor.greenlight.color, }}>0</b></Item>}
+                                {top3.length !== 0 ? <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Điểm 3 ném gần nhất: <b style={{ color: designColor.greenlight.color, }}>{top3[0]}, {top3[1]}, {top3[2]}</b></Item >:<Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Ném từ 3 lần trở lên để tìm phần thưởng.</Item>}
+                                <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.graylight.color}}>Tổng điểm: <b style={{ color: "red", fontSize: "20px" }}>{dataUser.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</b></Item>
                             </>
                             :
-                            <Item>người dùng chưa đăng nhập </Item>
+                            <Item style={{ backgroundColor: designColor.blackgray.color, color:designColor.greenlight.color}}>người dùng chưa đăng nhập </Item>
                         }
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                        <img id="img-dice" className="img-thumbnail" alt='dice' src={imagesDiceResult[randomNumber]} style={{ width: '200px', height: "200px" }} />
+                        <img id="img-dice" className="img-thumbnail" alt='dice' src={imagesDiceResult[randomNumber]} style={{ width: '200px', height: "250px" }} />
 
                     </div>
                     <div className="row form-group" style={{ display: "flex", justifyContent: "center", marginTop: "20px", marginBottom: "20px" }}>
-                        <Button variant="contained" value={user.username} onClick={onBtnNem} disabled={play}>Ném</Button>
+                        <Button variant="contained" value={user.username} onClick={onBtnNem} disabled={play} style={{backgroundColor:designColor.greenlight.color, color: designColor.black.color}}>Ném</Button>
                     </div>
                     {contextHolder}
                 </Grid>
@@ -192,11 +192,12 @@ export default function LuckyDiceGame() {
                                     width: "300px",
                                 }}
                                     src="https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/voucher.png?alt=media&token=8eea387a-7f1e-4330-8db3-e703f9c2a070" />
-                                <h3 style={{ color: "white" }}>Ném xúc xắc để tìm voucher</h3>
+                                <h3 style={{ color:designColor.greenlight.color}}>Ném xúc xắc để tìm voucher</h3>
                             </Grid>
 
                             :
-
+                                <Grid>
+                            <Typography style={{ fontWeight: 'bold', fontSize: "20px", color: "red", fontFamily: "FS Novathia Script", marginBottom:"20px", textAlign:'center' }}>Bạn đã nhận được voucher {discount}%</Typography>
                             <Paper style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -230,17 +231,18 @@ export default function LuckyDiceGame() {
 
                                 </div>
                             </Paper>
+                            </Grid>
                         }
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={8} style={{ display: "flex", justifyContent: "center" }} container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <div style={{marginTop:"60px"}}>
-                            {prize !== 1 && prize !== 0 ? <Typography style={{ fontWeight: 'bold', fontSize: "40px", color: "pink", fontFamily: "FS Novathia Script" }}>Chúc mừng</Typography> : <></>}
+                            {prize !== 1 && prize !== 0 ? <Typography style={{ fontWeight: 'bold', fontSize: "40px", color: "red", fontFamily: "FS Novathia Script" }}>Chúc mừng <Icon icon="streamline-emojis:wrapped-gift-2" width="50" height="50" /></Typography> : <></>}
                         </div>
 
                         <div>
-                            <Typography style={{ fontWeight: 'bold', fontSize: "20px", color: "white" }}>{imagesPrize[prize].description}</Typography>
+                            <Typography style={{ fontWeight: 'bold', fontSize: "20px", color: designColor.greenlight.color }}>{imagesPrize[prize].description}</Typography>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>

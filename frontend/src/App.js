@@ -9,12 +9,8 @@ function App() {
 
     <div className="App">
       <HeaderTab/>
-      {/* <Routes>
-
-        <Route path='/' element={<LoginSignUp />} />
-        <Route path='/game' element={<LuckyDiceGame />} />
-        </Routes> */}
-        <TheFooter/>
+     
+      <TheFooter className="footer"/>
     </div>
 
   );

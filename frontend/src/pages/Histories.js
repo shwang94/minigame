@@ -4,12 +4,14 @@ import axios from 'axios';
 import { styled, useTheme } from '@mui/material/styles';
 import { Icon } from '@iconify/react';
 
-import { Box, Paper, Grid, Typography, Container, Table, TableBody,  TableCell, TableContainer, TableFooter, TablePagination,
-TableRow, IconButton} from '@mui/material';
+import {
+    Box, Paper, Grid, Typography, Container, Table, TableBody, TableHead, TableCell, TableContainer, TableFooter, TablePagination,
+    TableRow, IconButton
+} from '@mui/material';
 
 import PropTypes from 'prop-types';
-import {imagesPrize} from '../data';
-
+import { imagesPrize } from '../data';
+import { designColor } from '../design';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -47,8 +49,8 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === 'rtl' ? <Icon icon="ph:arrow-line-right-duotone" color="green" width="20" height="20" />
-                    : <Icon icon="ph:arrow-line-left-duotone" color="green" width="20" height="20" />
+                {theme.direction === 'rtl' ? <Icon icon="ph:arrow-line-right-duotone" color={designColor.greenlight.color} width="20" height="20" />
+                    : <Icon icon="ph:arrow-line-left-duotone" color={designColor.greenlight.color} width="20" height="20" />
                 }
             </IconButton>
             <IconButton
@@ -56,8 +58,8 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="previous page"
             >
-                {theme.direction === 'rtl' ? <Icon icon="solar:square-alt-arrow-right-line-duotone" color="green" width="20" height="20" />
-                    : <Icon icon="solar:square-alt-arrow-left-line-duotone" color="green" width="20" height="20" />
+                {theme.direction === 'rtl' ? <Icon icon="solar:square-alt-arrow-right-line-duotone" color={designColor.greenlight.color} width="20" height="20" />
+                    : <Icon icon="solar:square-alt-arrow-left-line-duotone" color={designColor.greenlight.color} width="20" height="20" />
                 }
             </IconButton>
             <IconButton
@@ -65,8 +67,8 @@ function TablePaginationActions(props) {
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === 'rtl' ? <Icon icon="solar:square-alt-arrow-left-line-duotone" color="green" width="20" height="20" />
-                    : <Icon icon="solar:square-alt-arrow-right-line-duotone" color="green" width="20" height="20" />
+                {theme.direction === 'rtl' ? <Icon icon="solar:square-alt-arrow-left-line-duotone" color={designColor.greenlight.color} width="20" height="20" />
+                    : <Icon icon="solar:square-alt-arrow-right-line-duotone" color= {designColor.greenlight.color} width="20" height="20" />
                 }
             </IconButton>
             <IconButton
@@ -74,8 +76,8 @@ function TablePaginationActions(props) {
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === 'rtl' ? <Icon icon="ph:arrow-line-left-duotone" color="green" width="20" height="20" />
-                    : <Icon icon="ph:arrow-line-right-duotone" color="green" width="20" height="20" />
+                {theme.direction === 'rtl' ? <Icon icon="ph:arrow-line-left-duotone" color={designColor.greenlight.color} width="20" height="20" />
+                    : <Icon icon="ph:arrow-line-right-duotone" color={designColor.greenlight.color} width="20" height="20" />
                 }
             </IconButton>
         </Box>
@@ -114,10 +116,10 @@ export default function Histories() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    const rows = [{code: "Mã Voucher", discount:"Discount"}].concat(voucher)
+    const rows = voucher
 
     const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
 
     const handleChangePage = (event, newPage) => {
@@ -128,9 +130,9 @@ export default function Histories() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    
+
     useEffect(() => {
-        
+
         axios.get(`${apiUrl}/gamedice/dice-history/${user.username}`,
 
             {
@@ -182,7 +184,7 @@ export default function Histories() {
                 }
             }
         )
-            .then(function (response) {                
+            .then(function (response) {
 
                 voucherList(response.data.vouchers)
                     .then((result) => {
@@ -202,60 +204,70 @@ export default function Histories() {
 
     return (
         <Container>
-            <Grid container spacing={3} >
+            <Grid container spacing={3}>
                 <Grid item xs={12} sm={4}>
                     <div>
                         {user ?
                             <>
-                                <Item style={{ fontSize: "20px" }}>username: <b style={{ color: "violet", }}>{user.username}</b></Item>
-                                <Item>Số lần ném: <b style={{ color: "blue", }}>{dataUser.length}</b></Item>
-                                <Item>Tổng số voucher: <b style={{ color: "blue", }}>{voucher.length}</b></Item>
-                                <Item>Tổng số quà: <b style={{ color: "blue", }}>{prize.length}</b></Item>
-                                <Item>Điểm cao nhất đạt được là: <b style={{ color: "blue", }}>{dataUser.length > 0 ? Math.max(...dataUser) : 0}</b></Item>
-                                <Item>Tổng điểm: <b style={{ color: "red", fontSize: "20px" }}>{dataUser.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color, fontSize: "20px" }}>username: <b style={{ color: "violet", }}>{user.username}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>Số lần ném: <b style={{ color: designColor.greenlight.color, }}>{dataUser.length}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>Tổng số voucher: <b style={{ color: designColor.greenlight.color, }}>{voucher.length}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>Tổng số quà: <b style={{ color: designColor.greenlight.color, }}>{prize.length}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>Điểm cao nhất đạt được là: <b style={{ color: designColor.greenlight.color, }}>{dataUser.length > 0 ? Math.max(...dataUser) : 0}</b></Item>
+                                <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>Tổng điểm: <b style={{ color: "red", fontSize: "20px" }}>{dataUser.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</b></Item>
                             </>
                             :
-                            <Item>người dùng chưa đăng nhập </Item>
+                            <Item style={{ backgroundColor: designColor.black.color, color:designColor.graylight.color}}>người dùng chưa đăng nhập </Item>
                         }
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={8}>
-                    <div style={{ display: "flex", justifyContent:"space-around" }}>
+                <Grid item xs={24} sm={8}>
+                    <div style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(15%, 1fr))",
+      gridGap: "10px",
+      justifyContent: "space-around"
+  }}>
                         {prize ?
                             <>
-                                
+
                                 {imagesPrize.slice(2).map((items) => {
-                                return (
-                                <Item style={{ flexBasis:"15%"}}>
-                                    <img alt="img" style={{width:"100%", height:"110px" ,verticalAlign: "middle"}} 
-                                src={items.link}/> 
-                                <Typography><b style={{ color: "blue", }}>{prize.filter(item => item === items.name).length}</b></Typography> 
-                                <Typography>{items.description.replace("Bạn đã trúng thưởng phần quà là ", "").toUpperCase()}</Typography>
-                                </Item>
-                                )  
+                                    return (
+                                        <Item style={{ flexBasis: "15%", backgroundColor: designColor.black.color, color:designColor.greenlight.color}}>
+                                            <img alt="img" style={{ width: "100%", height: "130px", verticalAlign: "middle" }}
+                                                src={items.link} />
+                                            <Typography><b style={{ color: "red", }}>{prize.filter(item => item === items.name).length}</b></Typography>
+                                            <Typography style={{fontSize:'10px'}}>{items.description.replace("Bạn đã trúng thưởng phần quà là ", "").toUpperCase()}</Typography>
+                                        </Item>
+                                    )
                                 })}
                             </>
                             :
-                            <Item>Người dùng chưa đăng nhập </Item>
+                            <Item style={{backgroundColor: designColor.black.color, color:designColor.greenlight.color}}>Người dùng chưa đăng nhập </Item>
                         }
                     </div>
                 </Grid>
             </Grid>
-            <Grid container>
-                <p>Tổng số voucher</p>
-            </Grid>
-            <TableContainer component={Paper}>
+            <Grid container style={{marginTop:"50px"}}>
+                
+                <TableContainer component={Paper} style={{ backgroundColor: designColor.black.color}}>
                 <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{color:designColor.graylight.color}}>Mã Voucher</TableCell>
+                            <TableCell align="left" style={{color:designColor.graylight.color}}>Discount</TableCell>
+                        </TableRow>
+                    </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : rows
                         ).map((row) => (
                             <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
+                                <TableCell component="th" scope="row" style={{color:designColor.greenlight.color}}>
                                     {row.code}
                                 </TableCell>
-                                <TableCell style={{ width: 160 }} align="left">
+                                <TableCell style={{ color:designColor.greenlight.color}} align="left" >
                                     {row.discount}
                                 </TableCell>
 
@@ -263,8 +275,8 @@ export default function Histories() {
                         ))}
 
                         {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={6} />
+                            <TableRow style={{ color:designColor.greenlight.color, height: 53 * emptyRows }}>
+                                <TableCell colSpan={6} style={{ color:designColor.greenlight.color}}/>
                             </TableRow>
                         )}
                     </TableBody>
@@ -273,7 +285,7 @@ export default function Histories() {
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                                 colSpan={3}
-                                count={rows.length-1}
+                                count={rows.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 SelectProps={{
@@ -281,7 +293,9 @@ export default function Histories() {
                                         'aria-label': 'rows per page',
                                     },
                                     native: true,
+                                    style: { backgroundColor:designColor.graylight.color, color:designColor.black.color}
                                 }}
+                                style={{ color:designColor.graylight.color}}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 ActionsComponent={TablePaginationActions}
@@ -290,6 +304,8 @@ export default function Histories() {
                     </TableFooter>
                 </Table>
             </TableContainer>
+            </Grid>
+           
         </Container>
     )
 }

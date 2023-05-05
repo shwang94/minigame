@@ -6,8 +6,8 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import axios from 'axios';
 
 import { setUser } from "../actions/users.actions";
-
-import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message, Alert } from 'antd';
+import { designColor } from '../design';
+import { Form, Input, Button, Checkbox, Typography, Row, Col, Divider, Avatar, Upload, message } from 'antd';
 import { Container } from '@mui/system';
 import { Icon } from '@iconify/react';
 
@@ -29,11 +29,8 @@ function LoginSignUp() {
     const [name, setName] = useState("Mừng bạn đến với GAMEDICE")
     const [messageApi, contextHolder] = message.useMessage();
     const [imageUpLoad, setImageUpLoad] = useState(null)
-    const [showAlert, setShowAlert] = useState(false);
 
-    const handleCloseAlert = () => {
-        setShowAlert(false);
-    }
+    
     // đăng kí dùng useDispatch
     const dispatch = useDispatch();
 
@@ -125,7 +122,10 @@ function LoginSignUp() {
                     dispatch(setUser(in4User))
                     setName("Chào Mừng " + in4User.username + " đã trở lại với GAMEDICE");
                 }
-                else setShowAlert(true);
+                else messageApi.open({
+                    type: 'error',
+                    content: 'Lỗi: Mật khẩu hoặc User Name không đúng',
+                });;
 
 
             })
@@ -133,7 +133,7 @@ function LoginSignUp() {
                 console.log(error);
                 messageApi.open({
                     type: 'error',
-                    content: 'lỗi không lấy được dữ liệu',
+                    content: 'Lỗi: Không lấy được dữ liệu',
                 });
 
             });
@@ -141,12 +141,7 @@ function LoginSignUp() {
 
     };
 
-    const onFinishFailed = (errorInfo) => {
-        messageApi.open({
-            type: 'error',
-            content: errorInfo,
-        });
-    };
+   
 
     //Đăng kí người dùng
     const onSignUp = async (values) => {
@@ -193,38 +188,39 @@ function LoginSignUp() {
             console.log(error);
             messageApi.open({
                 type: 'error',
-                content: 'Không thể tạo tài khoản do username này đã tồn tại!',
+                content: 'Lỗi: Không thể tạo tài khoản do username này đã tồn tại',
 
             });
         }
     };
 
 
-    const onSignUpFailed = (errorInfo) => {
+    const onClickFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
         messageApi.open({
             type: 'error',
-            content: 'Không thể tạo tài khoản do chưa nhập đủ thông tin!',
+            content: 'Lỗi: Hãy kiểm tra lại thông tin của bạn.',
         });
     };
 
+
     const logoutAccount = () => {
         dispatch(setUser(null));
-       
+
     }
 
 
 
     return (
-        <Container style={{ backgroundColor: 'pink', padding: '30px' }}>
+        <Container style={{ padding: '30px' }}>
             {contextHolder}
             {
                 user ?
                     <>
-                        <Title level={2} style={{ textAlign: "center", color: "red" }}>{name}</Title>
+                        <Title level={2} style={{ textAlign: "center", color: designColor.greenlight.color }}>{name}</Title>
 
                         <>
-                            <Title level={5} style={{ textAlign: "center", color: "blue" }}>Thử vận may với Lucky Dice nhé!</Title>
+                            <Title level={5} style={{ textAlign: "center", color: designColor.graylight.color }}>Thử vận may với Lucky Dice nhé!</Title>
                             <div style={{ marginTop: '30px', display: "flex", justifyItems: "center", justifyContent: "center", textAlign: "center" }}>
                                 <Avatar style={{ marginTop: '30px', display: "flex", justifyItems: "center", justifyContent: "center", textAlign: "center" }}
                                     size={150}
@@ -232,132 +228,135 @@ function LoginSignUp() {
                                 />
                             </div>
                             <Row style={{ marginTop: '50px', display: 'flex', justifyContent: 'center' }}>
-                                <Button type="primary" onClick={logoutAccount}>Đăng xuất</Button>
+                                <Button type="primary" onClick={logoutAccount} style={{backgroundColor:designColor.greenlight.color, color:designColor.blackgray.color}}>Đăng xuất</Button>
                             </Row>
                         </>
 
                     </>
                     :
                     <>
-                        <Title style={{ display: "flex", justifyContent: "center" }} level={2}>START AND PLAY WITH US</Title>
-                        <Divider style={{ borderColor: 'blue' }}>SignIn With</Divider>
+                        <Title style={{ display: "flex", justifyContent: "center", color: designColor.greenlight.color }} level={2}>START AND PLAY WITH US</Title>
+                        <Divider style={{ borderColor: 'blue', color: designColor.greenlight.color }}>SignIn With</Divider>
                         <Row style={{ display: "flex", justifyContent: "center" }}>
-                            <Icon icon="vaadin:google-plus-square" color="red" width="50" height="50" onClick={loginGoogle} />
-
+                            <Icon icon="logos:google-icon" width="60" height="60" onClick={loginGoogle} />
                         </Row>
 
 
-                        <Divider style={{ borderColor: 'blue' }}>OR</Divider>
+                        <Divider style={{ borderColor: 'blue', color: designColor.greenlight.color }}>OR</Divider>
                         <Row>
-                            <Col span={12}><Form
-                                name="basic"
-                                labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 16 }}
-                                style={{ maxWidth: 600 }}
-                                initialValues={{ remember: true }}
-                                onFinish={onLogIn}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                            >
+                            <Col xs={24} md={12}>
+                                <Form
+                                    name="basic"
+                                    labelCol={{ span: 8 }}
+                                    wrapperCol={{ span: 24 }}
+                                    style={{ maxWidth: 600, textAlign:'center'}}
+                                    initialValues={{ remember: true }}
+                                    onFinish={onLogIn}
+                                    onFinishFailed={onClickFailed}
+                                    autoComplete="off"
+                                
+                                >
+                                    <Form.Item>
+                                        <Title style={{color: designColor.greenlight.color, fontSize:"18px"}}>Đăng nhập</Title>
+                                    </Form.Item>
 
-                                <Form.Item
-                                    label="User Name"
-                                    name="username"
-                                    rules={[
+                                    <Form.Item
+                                        label={<span style={designColor.greenlight}>User Name</span>}
+                                        name="username"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Hãy nhập User Name của bạn',
+                                            },
+                                        ]}
+                                    >
+                                        <Input placeholder="Insert your User Name" />
+                                    </Form.Item>
 
+                                    <Form.Item
+                                        label={<span style={designColor.greenlight}>Password</span>}
+                                        name="password"
+                                        rules={[{ required: true, message: 'Hãy nhập Password của bạn' }]}
+                                    >
+                                        <Input.Password placeholder="Insert your password" />
+                                    </Form.Item>
+
+                                    <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+                                        <Checkbox style={designColor.greenlight}>Remember me</Checkbox>
+                                    </Form.Item>
+
+                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                        <Button type="primary" htmlType="submit">
+                                            Log In
+                                        </Button>
+                                    </Form.Item>
+
+                                </Form>
+                            </Col>
+                            <Col xs={24} md={12}>
+                                <Form
+                                    name="basic"
+                                    labelCol={{ span: 8 }}
+                                    wrapperCol={{ span: 24 }}
+                                    style={{ maxWidth: 600, textAlign:'center' }}
+                                    initialValues={{ remember: true }}
+                                    onFinish={onSignUp}
+                                    onFinishFailed={onClickFailed}
+                                    autoComplete="off"
+                                >
+                                    <Form.Item>
+                                        <Title style={{color: designColor.greenlight.color, fontSize:"18px"}}>Đăng ký</Title>
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={<span style={designColor.greenlight}>User Name</span>}
+                                        name="username"
+                                        rules={[
+
+                                            {
+                                                required: true,
+                                                message: 'Hãy nhập User Name của bạn',
+                                            },
+                                        ]}
+                                    >
+                                        <Input placeholder="Insert your User Name" />
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={<span style={designColor.greenlight}>Password</span>}
+                                        name="password"
+                                        rules={[{ required: true, message: 'Hãy nhập Password của bạn' },
                                         {
-                                            required: true,
-                                            message: 'Please input your User Name!',
-                                        },
-                                    ]}
+                                            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                            message: 'Mật khẩu phải có ít nhất 8 kí tự bao gồm ít nhất một chữ in hoa, một chữ thường, một số và một kí tự đặc biệt',
+                                          }
+                                        ]}
+                                    >
+                                        <Input.Password placeholder="Insert your password" />
+                                    </Form.Item>
 
-                                >
-                                    <Input placeholder="Insert your User Name" />
-                                </Form.Item>
+                                    <Form.Item valuePropName="fileList"
+                                        getValueFromEvent={normFile}
+                                        label={<span style={designColor.greenlight}>Ảnh đại diện</span>}
+                                        name="dragger"
+                                        rules={[{ required: true, message: 'Bạn chưa tải ảnh đại diện' }]}
+                                    >
+                                        <Upload.Dragger name="files" action="/upload.do" maxCount={1} accept=".jpg,.png,.gif">
+                                            <p className="ant-upload-drag-icon">
+                                                <Icon icon="line-md:upload-loop" color="green" width="50" height="50" />
+                                            </p>
+                                            <p className="ant-upload-text" style={designColor.greenlight}>Click vào hoặc kéo thả file ảnh vào đây để tải lên</p>
+                                        </Upload.Dragger>
 
-                                <Form.Item
-                                    label="Password"
-                                    name="password"
-                                    rules={[{ required: true, message: 'Please input your password!' }]}
-                                >
-                                    <Input.Password placeholder="Insert your password" />
-                                </Form.Item>
+                                    </Form.Item>
 
-                                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Checkbox>Remember me</Checkbox>
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit">
-                                        Log In
-                                    </Button>
-                                </Form.Item>
-                                {showAlert && (
-
-                                    <Alert
-                                        message="Error"
-                                        description="Mật khẩu hoặc username không đúng!"
-                                        type="error"
-                                        showIcon
-                                        closable
-                                        onClose={handleCloseAlert}
-                                    />
-                                )}
-
-                            </Form></Col>
-                            <Col span={12}><Form
-                                name="basic"
-                                labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 16 }}
-                                style={{ maxWidth: 600 }}
-                                initialValues={{ remember: true }}
-                                onFinish={onSignUp}
-                                onFinishFailed={onSignUpFailed}
-                                autoComplete="off"
-                            >
-                                <Form.Item
-                                    label="User Name"
-                                    name="username"
-                                    rules={[
-
-                                        {
-                                            required: true,
-                                            message: 'Please input your User Name!',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="Insert your User Name" />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="Password"
-                                    name="password"
-                                    rules={[{ required: true, message: 'Please input your password!' }]}
-                                >
-                                    <Input.Password placeholder="Insert your password" />
-                                </Form.Item>
-
-                                <Form.Item valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                    label="Ảnh đại diện"
-                                    name="dragger"
-                                    rules={[{ required: true, message: 'Bạn chưa tải ảnh đại diện' }]}
-                                >
-                                    <Upload.Dragger name="files" action="/upload.do" maxCount={1} accept=".jpg,.png,.gif">
-                                        <p className="ant-upload-drag-icon">
-                                            <Icon icon="line-md:upload-loop" color="green" width="50" height="50" />
-                                        </p>
-                                        <p className="ant-upload-text">Click vào hoặc kéo thả file ảnh vào đây để tải lên</p>
-                                    </Upload.Dragger>
-
-                                </Form.Item>
-
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }}>
-                                        Sign Up
-                                    </Button>
-                                </Form.Item>
-                            </Form></Col>
+                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                        <Button type="primary" htmlType="submit" style={{ backgroundColor: 'green' }}>
+                                            Sign Up
+                                        </Button>
+                                    </Form.Item>
+                                </Form>
+                            </Col>
                         </Row>
 
                     </>

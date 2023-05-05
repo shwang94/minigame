@@ -1,4 +1,14 @@
 .App{
-    min-height: 2000px;
-    background-color: #250517	;
+    background-image: url("../src/images/background.jpg")	;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px; /* hoặc bất kỳ giá trị nào phù hợp */
+    background-color: '#C5C6C7';
+  }
+
+.background {
+    background-image: url("../src/images/background.jpg");
 }

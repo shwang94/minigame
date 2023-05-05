@@ -2,61 +2,61 @@ const imagesPrize = [
     {
         name: "prize",
         description: "3 lần ném liên tiếp trên 3 điểm sẽ nhận được 1 phần quà ngẫu nhiên.",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fprize.jpg?alt=media&token=27857a10-0a7a-4f9a-9b56-9dffcdeb87ce"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fprize.gif?alt=media&token=cbc0f7f8-251b-4628-a24a-247fce324a8a"
     },
 
     {
         name: "noprize",
         description: "Chưa có quà, hãy thử lại nhé!",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fnoprize.png?alt=media&token=d8bf1223-1a63-42f8-a261-766bc4d11543"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fnoprize.gif?alt=media&token=c644ed85-ca33-46d4-ab7c-413a60d95f49"
     },
 
     {
         name: "cake",
         description: "Bạn đã trúng thưởng phần quà là bánh kem",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fcake.png?alt=media&token=b6fb227d-7e86-4c85-9dc5-e9b339bde159"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fcake.png?alt=media&token=8bf3a6cd-6853-4345-8e8c-50d6201c4b43"
     },
 
     {
         name: "fan",
         description: "Bạn đã trúng thưởng phần quà là quạt cầm tay",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Ffan.jpg?alt=media&token=d873cbbb-d758-4faf-9ea0-ba91aef0a35e"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Ffan.png?alt=media&token=ea8cb59b-1668-4444-94e8-05892c005487"
     },
 
     {
         name: "bag",
         description: " Bạn đã trúng thưởng phần quà là túi xách tote Dicegame",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fbag.png?alt=media&token=91c39b77-6643-4667-b7b7-63f1c6bb88d5"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fbag.png?alt=media&token=78a8974b-8ba9-4f3f-9dcd-199a5bc33d19"
     },
 
     {
         name: "tshirt",
         description: "Bạn đã trúng thưởng phần quà là áo thun Dicegame",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Ftshirt.png?alt=media&token=26647e7d-1027-43ef-ab9b-9798ad0b203b"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Ftshirt.png?alt=media&token=faf19491-7ab0-44c9-a810-827574a4d355b"
     },
 
     {
-        name: "phone",
-        description: "Bạn đã trúng thưởng phần quà là điện thoại Xiaomi Redmi Note 9",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fphone.jfif?alt=media&token=ebcac3c9-7d09-4820-b854-a275ec4f6f89"
+        name: "card",
+        description: "Bạn đã trúng thưởng phần quà là thẻ cào điện thoại 20k",
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fcard.png?alt=media&token=5fc02e44-25b5-407c-a3df-686e58195c4f"
     },
 
     {
         name: "hat",
         description: "Bạn đã trúng thưởng phần quà là nón Dicegame",
-        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fhat.png?alt=media&token=8578130e-3a0b-4856-aef7-a3f59be1a540"
+        link: "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/prizeImages%2Fhat.png?alt=media&token=c43cd7ce-6a45-47b1-afdd-be64c395fc1c"
     },
 ]
 
 
 const imagesDiceResult = [
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2Fdice.jpg?alt=media&token=84a64837-c65d-4d86-91d7-fc5f5555349b",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F1.jpg?alt=media&token=96e29d33-e5e7-48d6-90ee-9e77abab9cd3",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F2.jpg?alt=media&token=4ff08042-395f-4cbd-9191-d0946af70519",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F3.jpg?alt=media&token=2a381250-709c-499e-852f-91d169d2980c",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F4.jpg?alt=media&token=e1d819df-3e1f-4e20-82f3-9243ecc3a431",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F5.jpg?alt=media&token=92c068fa-a92e-4349-ad6b-1ffde1e6638a",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F6.jpg?alt=media&token=8002734e-74af-432b-9ad4-dbefa30ad6c0",
-    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2Fdicespin.gif?alt=media&token=f6d5e30a-9562-4045-a19f-93e8672ef723"
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2Fdice.png?alt=media&token=bf64a0e2-96ea-499a-ae0b-658a75276dbd",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F1.png?alt=media&token=a5bb73e9-17ac-4fe5-a7ab-b126d6fb6d97",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F2.png?alt=media&token=0a1e710e-eb5f-4f6e-9467-e9b0391d994f",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F3.png?alt=media&token=e14611c5-9f95-4b9f-81f7-4e207d372083",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F4.png?alt=media&token=f2d50d92-bef8-463f-b4b0-bf4c0ad7e2e8",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F5.png?alt=media&token=4159cade-6817-415a-9d20-201a1a0fcd67",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2F6.png?alt=media&token=0339d6ee-f9a8-4fa0-8f41-e2ced67899ff",
+    "https://firebasestorage.googleapis.com/v0/b/pj-gamedice.appspot.com/o/diceImages%2Fdicespin.gif?alt=media&token=0570d083-e3a9-4c5d-a433-500b7a0a944a"
 ];
 export {imagesPrize, imagesDiceResult};
