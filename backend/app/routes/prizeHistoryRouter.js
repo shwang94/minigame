@@ -5,12 +5,12 @@ const { getAllPrizeHistory , getPrizeHistoryById , createPrizeHistory , updatePr
 
 const prizeHistoryRouter = express.Router();
 
-prizeHistoryRouter.get("/prize-histories", getAllPrizeHistory );
-prizeHistoryRouter.get("/prize-histories/:prizeHistoryId", getPrizeHistoryById );
+prizeHistoryRouter.get("/", getAllPrizeHistory );
+prizeHistoryRouter.get("/:prizeHistoryId", getPrizeHistoryById );
 
-prizeHistoryRouter.post("/prize-histories", createPrizeHistory );
-prizeHistoryRouter.put("/prize-histories/:prizeHistoryId", updatePrizeHistoryById );
+prizeHistoryRouter.post("/", createPrizeHistory );
+prizeHistoryRouter.put("/:prizeHistoryId", updatePrizeHistoryById );
 
-prizeHistoryRouter.delete("/prize-histories/:prizeHistoryId", deletePrizeHistoryById );
+prizeHistoryRouter.delete("/:prizeHistoryId", deletePrizeHistoryById );
 
 module.exports= { prizeHistoryRouter};

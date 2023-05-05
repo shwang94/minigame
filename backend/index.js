@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const dotenv = require('dotenv');
 //Import router
-const { homeRouter } = require("./app/routes/homeRouter");
-const { randomRouter } = require("./app/routes/randomRouter");
+
 const { diceRouter } = require("./app/routes/diceRouter");
 
 const { userRouter } = require("./app/routes/userRouter");
@@ -17,6 +18,28 @@ const { prizeHistoryRouter } = require("./app/routes/prizeHistoryRouter");
 
 
 const mongoose = require('mongoose');// khai báo thư viện database 
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Express API with Swagger',
+      version: '1.0.0',
+      description: 'A simple Express API with Swagger documentation',
+    },
+    servers: [
+      {
+        url: 'http://localhost:8000',
+      },
+    ],
+  },
+  apis: ['./index.js'], // Add the path to the file(s) containing your API documentation
+};
+const swaggerConfig = require('./swagger.config');
+//swaggerAutogen(swaggerConfig.outputFile, swaggerConfig.endpointsFiles, swaggerConfig);
+
+
+
+
 
 dotenv.config({
   path: './.env'
@@ -42,20 +65,21 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 const app = express();
 const port = process.env.PORT;
-
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require(swaggerConfig.outputFile)));
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 app.use(cors());
 app.options("*",cors());
-app.use("/", homeRouter);
-app.use("/", randomRouter);
+
 app.use("/gamedice", diceRouter);
 
-app.use("/", userRouter);
-app.use("/", prizeRouter);
-app.use("/", voucherRouter);
-app.use("/", diceHistoryRouter);
-app.use("/", voucherHistoryRouter);
-app.use("/", prizeHistoryRouter);
+app.use("/users", userRouter);
+app.use("/prizes", prizeRouter);
+app.use("/vouchers", voucherRouter);
+app.use("/dice-histories", diceHistoryRouter);
+app.use("/voucher-histories", voucherHistoryRouter);
+app.use("/prize-histories", prizeHistoryRouter);
 
 
 app.listen(port, () => {

@@ -5,12 +5,12 @@ const { getAllVoucherHistory , getVoucherHistoryById , createVoucherHistory , up
 
 const voucherHistoryRouter = express.Router();
 
-voucherHistoryRouter.get("/voucher-histories", getAllVoucherHistory );
-voucherHistoryRouter.get("/voucher-histories/:voucherHistoryId", getVoucherHistoryById );
+voucherHistoryRouter.get("/", getAllVoucherHistory );
+voucherHistoryRouter.get("/:voucherHistoryId", getVoucherHistoryById );
 
-voucherHistoryRouter.post("/voucher-histories", createVoucherHistory );
-voucherHistoryRouter.put("/voucher-histories/:voucherHistoryId", updateVoucherHistoryById );
+voucherHistoryRouter.post("/", createVoucherHistory );
+voucherHistoryRouter.put("/:voucherHistoryId", updateVoucherHistoryById );
 
-voucherHistoryRouter.delete("/voucher-histories/:voucherHistoryId", deleteVoucherHistoryById );
+voucherHistoryRouter.delete("/:voucherHistoryId", deleteVoucherHistoryById );
 
 module.exports= { voucherHistoryRouter};

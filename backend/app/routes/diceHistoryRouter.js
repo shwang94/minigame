@@ -5,12 +5,12 @@ const { getAllDiceHistory , getDiceHistoryById , createDiceHistory , updateDiceH
 
 const diceHistoryRouter = express.Router();
 
-diceHistoryRouter.get("/dice-histories", getAllDiceHistory );
-diceHistoryRouter.get("/dice-histories/:diceHistoryId", getDiceHistoryById );
+diceHistoryRouter.get("/", getAllDiceHistory );
+diceHistoryRouter.get("/:diceHistoryId", getDiceHistoryById );
 
-diceHistoryRouter.post("/dice-histories", createDiceHistory );
-diceHistoryRouter.put("/dice-histories/:diceHistoryId", updateDiceHistoryById );
+diceHistoryRouter.post("/", createDiceHistory );
+diceHistoryRouter.put("/:diceHistoryId", updateDiceHistoryById );
 
-diceHistoryRouter.delete("/dice-histories/:diceHistoryId", deleteDiceHistoryById );
+diceHistoryRouter.delete("/:diceHistoryId", deleteDiceHistoryById );
 
 module.exports= { diceHistoryRouter};

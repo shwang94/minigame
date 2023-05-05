@@ -5,9 +5,6 @@ const { getDice, get3CurrentDice, getDiceHistory, getPrizeHistory, getVoucherHis
 
 const diceRouter = express.Router();
 
-// userRouter.use( courseMiddleware );
-
-
 diceRouter.post("/dice", getDice);
 diceRouter.get("/dice-history/:username", getDiceHistory);
 diceRouter.get("/prize-history/:username", getPrizeHistory);

@@ -5,12 +5,12 @@ const { getAllPrize, getPrizeById, createPrize, updatePrizeById, deletePrizeById
 const prizeRouter = express.Router();
 
 
-prizeRouter.get("/prizes", getAllPrize);
-prizeRouter.get("/prizes/:prizeId", getPrizeById);
+prizeRouter.get("/", getAllPrize);
+prizeRouter.get("/:prizeId", getPrizeById);
 
-prizeRouter.post("/prizes", createPrize);
-prizeRouter.put("/prizes/:prizeId", updatePrizeById);
+prizeRouter.post("/", createPrize);
+prizeRouter.put("/:prizeId", updatePrizeById);
 
-prizeRouter.delete("/prizes/:prizeId", deletePrizeById);
+prizeRouter.delete("/:prizeId", deletePrizeById);
 
 module.exports= { prizeRouter};

@@ -5,13 +5,13 @@ const { getAllVoucher, getVoucherById, getDiscount, createVoucher, updateVoucher
 const voucherRouter = express.Router();
 
 
-voucherRouter.get("/vouchers", getAllVoucher);
-voucherRouter.get("/vouchers/:voucherId", getVoucherById);
+voucherRouter.get("/", getAllVoucher);
+voucherRouter.get("/:voucherId", getVoucherById);
 voucherRouter.get("/discount/:code", getDiscount);
 
-voucherRouter.post("/vouchers", createVoucher);
-voucherRouter.put("/vouchers/:voucherId", updateVoucherById);
+voucherRouter.post("/", createVoucher);
+voucherRouter.put("/:voucherId", updateVoucherById);
 
-voucherRouter.delete("/vouchers/:voucherId", deleteVoucherById);
+voucherRouter.delete("/:voucherId", deleteVoucherById);
 
 module.exports= { voucherRouter};

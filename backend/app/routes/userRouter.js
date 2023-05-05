@@ -8,12 +8,12 @@ const userRouter = express.Router();
 // userRouter.use( courseMiddleware );
 
 
-userRouter.get("/users", getAllUser);
-userRouter.get("/users/:userId", getUserById);
+userRouter.get("/", getAllUser);
+userRouter.get("/:userId", getUserById);
 
-userRouter.post("/users", createUser);
-userRouter.put("/users/:userId", updateUserById);
+userRouter.post("/", createUser);
+userRouter.put("/:userId", updateUserById);
 
-userRouter.delete("/users/:userId", deleteUserById);
+userRouter.delete("/:userId", deleteUserById);
 
 module.exports= { userRouter};
