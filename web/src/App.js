@@ -1,41 +1,42 @@
-import React, { useState,useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes,Navigate  } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import DicePage from './pages/DicePage';
-import HistoryPage from './pages/HistoryPage';
-import MainLayout from './components/layouts/MainLayout';
-import UserContext from './UserContext';
-import Cookies from 'js-cookie';
+import React from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import LoginPage from "./pages/login";
+import HomePage from "./pages/home";
+import DicePage from "./pages/dice";
+import HistoryPage from "./pages/history";
+import ProfilePage from './pages/profile'
+import MainLayout from "./components/layouts/MainLayout";
+import {useAuth} from "./AuthProvider";
+import SignUpPage from "./pages/signup";
+
+
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    const savedUser = Cookies.get('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
-
-  const handleSetUser = (userData) => {
-    setUser(userData);
-    Cookies.set('user', JSON.stringify(userData), { expires: 7 }); // Set the cookie to expire in 7 days
-  };
+  const {currentUser} = useAuth();
 
   return (
-    <Router>
-      <UserContext.Provider value={{ user, setUser: handleSetUser }}>
-        <MainLayout>
-          <Routes>
-            <Route path="/" element={user ? <HomePage /> : <Navigate to="/login" replace />}/>
-            <Route path="/dice" element={user ? <DicePage /> : <Navigate to="/login" replace />}/>
-            <Route path="/history" element={user ? <HistoryPage /> : <Navigate to="/login" replace />}/>            
-            <Route  path="/login" element={<LoginPage/>} />
-          </Routes>
-        </MainLayout>
-      </UserContext.Provider>
-    </Router>
+    <MainLayout>
+      <Routes>
+        <Route
+          path="/"
+          element={currentUser ? <HomePage /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/dice"
+          element={currentUser ? <DicePage /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/history"
+          element={currentUser ? <HistoryPage /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/profile"
+          element={currentUser ? <ProfilePage /> : <Navigate to="/login" replace />}
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+      </Routes>
+    </MainLayout>
   );
 };
 

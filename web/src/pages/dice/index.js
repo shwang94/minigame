@@ -1,10 +1,9 @@
 import React from 'react';
+import LuckyDice from '../../components/luckydice';
 
 const DicePage = () => {
   return (
-    <div>
-      <h1>Play Lucky Dice Page</h1>
-    </div>
+    <LuckyDice/>
   );
 };
 

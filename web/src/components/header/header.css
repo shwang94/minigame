@@ -25,6 +25,11 @@
   .user {
     font-size: 1.0rem;
     border: #61dafb;
+    margin-right: 20px;
+  }
+  
+  .user:hover{
+    color: #61dafb;
   }
   
   .login-button {
@@ -36,8 +41,11 @@
     color: #282c34;
     cursor: pointer;
     transition: background-color 0.3s;
+    
   }
-  
+  .left-aligned-button {
+    float: right;
+  }
   .login-button:hover {
     background-color: #4ac0e7;
   }
