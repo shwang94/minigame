@@ -10,7 +10,9 @@ const LoginPage = () => {
   if(currentUser !==null) return(<></>);
 
   return (
+    
     <div className="login-page">
+      
       <div className="login-container">
         <SignIn />
         <div className='center-text-align'>Or</div>

@@ -45,6 +45,7 @@ export function AuthProvider({ children }) {
   };
   const signOut = ()=>{
     setCurrentUser(null);
+    navigate('/login');
   }
   useEffect(() => {
 

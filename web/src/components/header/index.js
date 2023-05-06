@@ -14,14 +14,15 @@ const Header = () => {
       {currentUser && (
         <>
           <Link className='link' to="/">Home</Link>
-          <Link className='link' to="/dice">Play Game</Link>
+          <Link className='link' to="/dice">Dice</Link>
+          <Link className='link' to="/user">Users</Link>
           <Link className='link' to="/history">History</Link>
         </>
       )}
     </nav>
     {currentUser ? (
       <div>
-        Welcome, <span className='user'><Link className='link' to='/profile'>{currentUser.displayName}</Link></span>
+        Welcome, <span className='user'><Link className='link' to='/profile'>{currentUser.email}</Link></span>
         <button className="right-aligned-button" onClick={signOut} >Log out</button>
       </div>
     ) : (

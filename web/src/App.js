@@ -8,6 +8,7 @@ import ProfilePage from './pages/profile'
 import MainLayout from "./components/layouts/MainLayout";
 import {useAuth} from "./AuthProvider";
 import SignUpPage from "./pages/signup";
+import UserPage from "./pages/user";
 
 
 
@@ -28,6 +29,10 @@ const App = () => {
         <Route
           path="/history"
           element={currentUser ? <HistoryPage /> : <Navigate to="/login" replace />}
+        />
+         <Route
+          path="/user"
+          element={currentUser ? <UserPage /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/profile"
